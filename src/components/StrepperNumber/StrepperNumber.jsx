@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react'
 import { Container, MinusBtn, PlusBtn } from "./StrepperNumberStyle"
-import AppContext from '../../context/AppContext'
 
 const StrepperNumber = () => {
-    const { strepperNumber, setStrepperNumber } = useContext(AppContext);
+    const [strepperNumber, setStrepperNumber] = useState(1);
+
 
     function handleStrepperNumber(value) {
         value == "increment" ? setStrepperNumber((prev) => prev + 1) : setStrepperNumber((prev) => prev - 1)
