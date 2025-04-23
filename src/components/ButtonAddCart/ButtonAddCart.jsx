@@ -19,6 +19,8 @@ const ButtonAddCart = ({ image, title, price }) => {
         }
 
         const newValue = {
+            id: crypto.randomUUID(),
+            quantity: 1,
             image,
             title,
             price

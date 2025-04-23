@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Container,
     AreaInfo,
@@ -18,14 +18,31 @@ import {
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import StrepperNumber from '../StrepperNumber/StrepperNumber';
 import AppContext from '../../context/AppContext';
+import { convertToReal } from '../../utils/utils';
 
 const CartList = () => {
-    function convertToReal(price) {
-        const priceInReal = (price / 100).toFixed(2).replace(".", ",").replace(/^(\d+)(\d{3},\d{2})$/, '$1.$2')
-        return priceInReal
+    const [valueStrepper, setValueStrepper] = useState(1);
+    const saveValueTotalAllProducts = [];
+    const { allDataLocalStorage } = useContext(AppContext);
+
+    function valueTotal() {
+        allDataLocalStorage.forEach((e) => saveValueTotalAllProducts.push(e.price * e.quantity))
+        const sum = saveValueTotalAllProducts.reduce((a, b) => a + b, 0)
+        const convert = convertToReal(sum)
+        console.log(convert)
+        return convert
     }
 
-    const { allDataLocalStorage } = useContext(AppContext)
+    function valueTotalList(price, quantity) {
+        const multiple = price * quantity
+        const convert = convertToReal(multiple)
+        return convert
+    }
+
+    function saveStrepper(value) {
+        setValueStrepper(value)
+    }
+
     return (
         <Container>
             <Title>
@@ -45,21 +62,23 @@ const CartList = () => {
                                 </tr>
                             </TableHead>
                             <TableBody>
-                                {allDataLocalStorage.map((e, i) =>
-                                    <tr key={i}>
-                                        <AreaImg>
-                                            <img src={e.image} alt="Produto" />
-                                            <h4>{e.title}</h4>
-                                        </AreaImg>
-                                        <td>{e.price}</td>
-                                        <td><StrepperNumber /></td>
-                                        <td>1.289,90</td>
-                                        <td>
-                                            <ButtonRemoveCart>
-                                                <RemoveShoppingCartIcon />
-                                            </ButtonRemoveCart>
-                                        </td>
-                                    </tr>)}
+                                {allDataLocalStorage.length == 0
+                                    ? <p>Seu carrinho está vazio.</p>
+                                    : allDataLocalStorage.map((e) =>
+                                        <tr key={e.id}>
+                                            <AreaImg>
+                                                <img src={e.image} alt="Produto" />
+                                                <h4>{e.title}</h4>
+                                            </AreaImg>
+                                            <td>{convertToReal(e.price)}</td>
+                                            <td><StrepperNumber saveStrepper={saveStrepper} id={e.id} /></td>
+                                            <td>{valueTotalList(e.price, e.quantity)}</td>
+                                            <td>
+                                                <ButtonRemoveCart>
+                                                    <RemoveShoppingCartIcon />
+                                                </ButtonRemoveCart>
+                                            </td>
+                                        </tr>)}
                                 {/* <tr>
                                     <AreaImg>
                                         <img src="https://i.postimg.cc/jjSmYrMd/Notebook-Asus-Vivobook-Go-15.webp" alt="" />
@@ -86,7 +105,7 @@ const CartList = () => {
                         <ContentResumeBuy>
                             <div>
                                 <p>Sub-total</p>
-                                <p>1.289,90</p>
+                                <p>{valueTotal()}</p>
                             </div>
                             <div>
                                 <p>Frete</p>
@@ -95,7 +114,7 @@ const CartList = () => {
                         </ContentResumeBuy>
                         <TotalResumeBuy>
                             <p>Total</p>
-                            <p>1.289,90</p>
+                            <p>{valueTotal()}</p>
                         </TotalResumeBuy>
                     </BoxResumeBuy>
                     <AreaButtonResumeBuy>

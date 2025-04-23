@@ -2,10 +2,10 @@ import React from 'react'
 import HalfRating from '../HalfRating/HalfRating'
 import { ContainerCard, AreaImg, AreaTitle, Title, Rating, Price } from "./CardProductsStyle"
 import ButtonAddCart from '../ButtonAddCart/ButtonAddCart'
+import { convertToReal } from '../../utils/utils'
 
 const CardProducts = ({ image, category, title, description, rate, price }) => {
-    const categoryUpper = category.replace(category[0], category[0].toUpperCase())
-    const priceInReal = (price / 100).toFixed(2).replace(".", ",").replace(/^(\d+)(\d{3},\d{2})$/, '$1.$2')
+    // const categoryUpper = category.replace(category[0], category[0].toUpperCase())
     const promo = ((price / 100) / 10).toFixed(2)
 
     return (
@@ -23,7 +23,7 @@ const CardProducts = ({ image, category, title, description, rate, price }) => {
                     <HalfRating rate={rate} />
                 </Rating>
                 <Price>
-                    <h3>{`R$ ${priceInReal}`}</h3>
+                    <h3>{`R$ ${convertToReal(price)}`}</h3>
                     <p>{`ou 10x de ${promo}`}</p>
                 </Price>
                 <ButtonAddCart image={image} title={title} price={price} />
