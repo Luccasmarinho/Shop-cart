@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
 import {
     Container,
     AreaInfo,
@@ -25,13 +25,20 @@ const CartList = () => {
     const saveValueTotalAllProducts = [];
     const { allDataLocalStorage } = useContext(AppContext);
 
-    function valueTotal() {
+    // function valueTotal() {
+    //     allDataLocalStorage.forEach((e) => saveValueTotalAllProducts.push(e.price * e.quantity))
+    //     const sum = saveValueTotalAllProducts.reduce((a, b) => a + b, 0)
+    //     const convert = convertToReal(sum)
+    //     console.log(convert)
+    //     return convert
+    // }
+
+    const valueTotal = useMemo(() => {
         allDataLocalStorage.forEach((e) => saveValueTotalAllProducts.push(e.price * e.quantity))
         const sum = saveValueTotalAllProducts.reduce((a, b) => a + b, 0)
         const convert = convertToReal(sum)
-        console.log(convert)
         return convert
-    }
+    }, [saveValueTotalAllProducts])
 
     function valueTotalList(price, quantity) {
         const multiple = price * quantity
@@ -105,7 +112,7 @@ const CartList = () => {
                         <ContentResumeBuy>
                             <div>
                                 <p>Sub-total</p>
-                                <p>{valueTotal()}</p>
+                                <p>{valueTotal}</p>
                             </div>
                             <div>
                                 <p>Frete</p>
@@ -114,7 +121,7 @@ const CartList = () => {
                         </ContentResumeBuy>
                         <TotalResumeBuy>
                             <p>Total</p>
-                            <p>{valueTotal()}</p>
+                            <p>{valueTotal}</p>
                         </TotalResumeBuy>
                     </BoxResumeBuy>
                     <AreaButtonResumeBuy>
