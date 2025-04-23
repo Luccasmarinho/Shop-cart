@@ -28,6 +28,7 @@ const Products = () => {
                     key={e.id}
                     image={e.image}
                     category={e.category}
+                    title={e.title}
                     description={e.description}
                     price={e.price}
                     rate={e.rating_rate}

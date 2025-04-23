@@ -3,7 +3,7 @@ import HalfRating from '../HalfRating/HalfRating'
 import { ContainerCard, AreaImg, AreaTitle, Title, Rating, Price } from "./CardProductsStyle"
 import ButtonAddCart from '../ButtonAddCart/ButtonAddCart'
 
-const CardProducts = ({ image, category, description, rate, price }) => {
+const CardProducts = ({ image, category, title, description, rate, price }) => {
     const categoryUpper = category.replace(category[0], category[0].toUpperCase())
     const priceInReal = (price / 100).toFixed(2).replace(".", ",").replace(/^(\d+)(\d{3},\d{2})$/, '$1.$2')
     const promo = ((price / 100) / 10).toFixed(2)
@@ -15,7 +15,7 @@ const CardProducts = ({ image, category, description, rate, price }) => {
             </AreaImg>
             <AreaTitle>
                 <Title>
-                    <strong>{categoryUpper}</strong>
+                    <strong>{title}</strong>
                     <p>{description}</p>
                 </Title>
                 <Rating>
@@ -26,7 +26,7 @@ const CardProducts = ({ image, category, description, rate, price }) => {
                     <h3>{`R$ ${priceInReal}`}</h3>
                     <p>{`ou 10x de ${promo}`}</p>
                 </Price>
-                <ButtonAddCart />
+                <ButtonAddCart image={image} title={title} price={price} />
             </AreaTitle>
         </ContainerCard>
     )

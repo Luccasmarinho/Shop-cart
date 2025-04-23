@@ -58,6 +58,16 @@ export const AreaImg = styled.td`
     img {
         width: 100px;
     }
+
+    h4 {
+        width: 200px;
+        font-size: 15px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
 `
 
 export const ButtonRemoveCart = styled.button` 

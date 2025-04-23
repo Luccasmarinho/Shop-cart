@@ -17,8 +17,15 @@ import {
 } from "./CartListStyle"
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import StrepperNumber from '../StrepperNumber/StrepperNumber';
+import AppContext from '../../context/AppContext';
 
 const CartList = () => {
+    function convertToReal(price) {
+        const priceInReal = (price / 100).toFixed(2).replace(".", ",").replace(/^(\d+)(\d{3},\d{2})$/, '$1.$2')
+        return priceInReal
+    }
+
+    const { allDataLocalStorage } = useContext(AppContext)
     return (
         <Container>
             <Title>
@@ -38,7 +45,22 @@ const CartList = () => {
                                 </tr>
                             </TableHead>
                             <TableBody>
-                                <tr>
+                                {allDataLocalStorage.map((e, i) =>
+                                    <tr key={i}>
+                                        <AreaImg>
+                                            <img src={e.image} alt="Produto" />
+                                            <h4>{e.title}</h4>
+                                        </AreaImg>
+                                        <td>{e.price}</td>
+                                        <td><StrepperNumber /></td>
+                                        <td>1.289,90</td>
+                                        <td>
+                                            <ButtonRemoveCart>
+                                                <RemoveShoppingCartIcon />
+                                            </ButtonRemoveCart>
+                                        </td>
+                                    </tr>)}
+                                {/* <tr>
                                     <AreaImg>
                                         <img src="https://i.postimg.cc/jjSmYrMd/Notebook-Asus-Vivobook-Go-15.webp" alt="" />
                                         <h4>Nome Produto</h4>
@@ -51,7 +73,7 @@ const CartList = () => {
                                             <RemoveShoppingCartIcon />
                                         </ButtonRemoveCart>
                                     </td>
-                                </tr>
+                                </tr> */}
                             </TableBody>
                         </table>
                     </div>
