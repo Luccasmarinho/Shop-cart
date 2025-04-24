@@ -70,13 +70,13 @@ export const AreaImg = styled.td`
     }
 `
 
-export const ButtonRemoveCart = styled.button` 
-    background-color: transparent;
-    outline: none;
-    border: none;
-    color: #CF3438;
-    cursor: pointer;
-`
+// export const ButtonRemoveCart = styled.button` 
+//     background-color: transparent;
+//     outline: none;
+//     border: none;
+//     color: #CF3438;
+//     cursor: pointer;
+// `
 
 export const ContainerResumeBuy = styled.div`
     width: 300px;

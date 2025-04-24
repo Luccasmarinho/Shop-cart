@@ -7,7 +7,6 @@ import {
     TableTitle,
     TableBody,
     AreaImg,
-    ButtonRemoveCart,
     ContainerResumeBuy,
     BoxResumeBuy,
     TitleResumeBuy,
@@ -15,23 +14,16 @@ import {
     TotalResumeBuy,
     AreaButtonResumeBuy
 } from "./CartListStyle"
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import StrepperNumber from '../StrepperNumber/StrepperNumber';
 import AppContext from '../../context/AppContext';
 import { convertToReal } from '../../utils/utils';
+import ButtonRemoveCart from '../ButtonRemoveCart/ButtonRemoveCart';
 
 const CartList = () => {
     const [valueStrepper, setValueStrepper] = useState(1);
     const saveValueTotalAllProducts = [];
     const { allDataLocalStorage } = useContext(AppContext);
 
-    // function valueTotal() {
-    //     allDataLocalStorage.forEach((e) => saveValueTotalAllProducts.push(e.price * e.quantity))
-    //     const sum = saveValueTotalAllProducts.reduce((a, b) => a + b, 0)
-    //     const convert = convertToReal(sum)
-    //     console.log(convert)
-    //     return convert
-    // }
 
     const valueTotal = useMemo(() => {
         allDataLocalStorage.forEach((e) => saveValueTotalAllProducts.push(e.price * e.quantity))
@@ -69,7 +61,7 @@ const CartList = () => {
                                 </tr>
                             </TableHead>
                             <TableBody>
-                                {allDataLocalStorage.length == 0
+                                {allDataLocalStorage.length == 0 || !allDataLocalStorage
                                     ? <p>Seu carrinho está vazio.</p>
                                     : allDataLocalStorage.map((e) =>
                                         <tr key={e.id}>
@@ -81,25 +73,9 @@ const CartList = () => {
                                             <td><StrepperNumber saveStrepper={saveStrepper} id={e.id} /></td>
                                             <td>{valueTotalList(e.price, e.quantity)}</td>
                                             <td>
-                                                <ButtonRemoveCart>
-                                                    <RemoveShoppingCartIcon />
-                                                </ButtonRemoveCart>
+                                                <ButtonRemoveCart id={e.id} />
                                             </td>
                                         </tr>)}
-                                {/* <tr>
-                                    <AreaImg>
-                                        <img src="https://i.postimg.cc/jjSmYrMd/Notebook-Asus-Vivobook-Go-15.webp" alt="" />
-                                        <h4>Nome Produto</h4>
-                                    </AreaImg>
-                                    <td>R$ 1.289,90</td>
-                                    <td><StrepperNumber /></td>
-                                    <td>1.289,90</td>
-                                    <td>
-                                        <ButtonRemoveCart>
-                                            <RemoveShoppingCartIcon />
-                                        </ButtonRemoveCart>
-                                    </td>
-                                </tr> */}
                             </TableBody>
                         </table>
                     </div>
