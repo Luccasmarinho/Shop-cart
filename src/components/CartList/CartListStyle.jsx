@@ -27,6 +27,7 @@ export const Title = styled.div`
 export const AreaInfo = styled.div`
   display: flex;
   /* justify-content: space-evenly; */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 50px;
 `
@@ -68,6 +69,10 @@ export const AreaImg = styled.td`
         overflow: hidden;
         text-overflow: ellipsis; 
     }
+`
+
+export const Price = styled.td`
+    width: 100px;
 `
 
 // export const ButtonRemoveCart = styled.button` 
@@ -142,11 +147,3 @@ export const AreaButtonResumeBuy = styled.div`
    }
     
 `
-
-
-
-// display: -webkit-box;
-// -webkit-line-clamp: 2;
-// -webkit-box-orient: vertical;
-// overflow: hidden;
-// text-overflow: ellipsis; 

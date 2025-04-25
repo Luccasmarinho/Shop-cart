@@ -7,6 +7,7 @@ import {
     TableTitle,
     TableBody,
     AreaImg,
+    Price,
     ContainerResumeBuy,
     BoxResumeBuy,
     TitleResumeBuy,
@@ -22,8 +23,7 @@ import ButtonRemoveCart from '../ButtonRemoveCart/ButtonRemoveCart';
 const CartList = () => {
     const [valueStrepper, setValueStrepper] = useState(1);
     const saveValueTotalAllProducts = [];
-    const { allDataLocalStorage } = useContext(AppContext);
-
+    const { allDataLocalStorage, inputSearch } = useContext(AppContext);
 
     const valueTotal = useMemo(() => {
         allDataLocalStorage.forEach((e) => saveValueTotalAllProducts.push(e.price * e.quantity))
@@ -62,20 +62,26 @@ const CartList = () => {
                             </TableHead>
                             <TableBody>
                                 {allDataLocalStorage.length == 0 || !allDataLocalStorage
-                                    ? <p>Seu carrinho está vazio.</p>
-                                    : allDataLocalStorage.map((e) =>
-                                        <tr key={e.id}>
-                                            <AreaImg>
-                                                <img src={e.image} alt="Produto" />
-                                                <h4>{e.title}</h4>
-                                            </AreaImg>
-                                            <td>{convertToReal(e.price)}</td>
-                                            <td><StrepperNumber saveStrepper={saveStrepper} id={e.id} /></td>
-                                            <td>{valueTotalList(e.price, e.quantity)}</td>
-                                            <td>
-                                                <ButtonRemoveCart id={e.id} />
-                                            </td>
-                                        </tr>)}
+                                    ? <tr>
+                                        <td>Seu carrinho está vazio.</td>
+                                    </tr>
+                                    : allDataLocalStorage
+                                        .filter((e) =>
+                                            e.title.toLowerCase().includes(inputSearch.toLowerCase()))
+                                        .map((e) =>
+                                            <tr key={e.id}>
+                                                <AreaImg>
+                                                    <img src={e.image} alt="Produto" />
+                                                    <h4>{e.title}</h4>
+                                                </AreaImg>
+                                                <td>{convertToReal(e.price)}</td>
+                                                <td><StrepperNumber saveStrepper={saveStrepper} id={e.id} /></td>
+                                                <Price>{valueTotalList(e.price, e.quantity)}</Price>
+                                                <td>
+                                                    <ButtonRemoveCart id={e.id} />
+                                                </td>
+                                            </tr>
+                                        )}
                             </TableBody>
                         </table>
                     </div>

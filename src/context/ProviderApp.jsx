@@ -3,6 +3,7 @@ import AppContext from "./AppContext";
 
 function ProviderApp({ children }) {
     const [loading, setLoading] = useState(true);
+    const [inputSearch, setInputSearch] = useState("");
     const [allDataLocalStorage, setAllDataLocalStorage] = useState(() => {
         return JSON.parse(localStorage.getItem("cart")) || []
     });
@@ -11,8 +12,9 @@ function ProviderApp({ children }) {
         loading,
         setLoading,
         allDataLocalStorage,
-        setAllDataLocalStorage
-
+        setAllDataLocalStorage,
+        inputSearch,
+        setInputSearch
     }
 
     return (
